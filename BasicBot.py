@@ -66,7 +66,64 @@ async def search(*args):
     await client.say(output[1])
     """
 
-client.run('NDI3OTUwODQzODAzNzI5OTIw.DZsAtg.WcQgSrN9AY1f7wXl8RS1KJRI6HQ')
+"""
+TODO: DEVVEDIN CLASS NEEDS TESTING
+"""
+@client.command()
+async def list():
+    list = yt.getList()
+    if list:
+        for item in list:
+            await client.say(item)
+            await client.say("Use command with option !command -[number]")
+
+"""
+TODO:FUTURE COMMANDS THEORETICAL
+BASE ON LEN(*STR)
+GET ITEM IN ARRAY
+SHOULD CONFORT TO -COMMANDEXTRA
+SWITCH IT TO ADDED COMMANDS
+"""
+@client.command()
+async def query(*args):
+    await client.say("add link to playlist")
+
+    # Show then place in queue
+    # Command option for place in certain position -> ARRRAY STARTS AT 0
+    # Echo final position until test success
+
+@client.command()
+async def list(*args):
+    await client.say("list all entries in playlist")
+
+    # Show first X amount of entires then total amount as total row
+    # Command to upload whole file
+    # Command to show next song(s)
+    # Command to show all -> should only work by admin
+
+@client.command()
+async def play(*args):
+    await client.say("play link then continue queue")
+
+    # Add commands extra for play then clear que, play then do something else
+
+"""
+ADD SLEEP BREAK BETWEEN COMMANDS
+ADD ADMIN RECOGNITION
+ADD WHITELIST FOR USERS
+APPLY CURRENT PROFANITY FILTER TO EVERYTHING!!
+COMMAND TO KILL BOT
+COMMAND TO SLEEP BOT
+COMMAND TO RUN SCRIPT ONLY BY ADMIN
+COMMAND TO SHOW CURRENT TIME
+COMMAND TO SHOW CURRENT RESOURCES BEING USED
+COMMAND TO RESTART BOT
+COMMAND FOR FLAVOUR
+COMMAND FOR EXTRA STUFF INCLUDING IMAGES
+CREATE MEDIA FOLDER
+CREATE SCRIPT LIBRARY ELSEWHERE
+"""
+
 
 # Basic Bot was created by Habchy#1665
 # Please join this Discord server if you need help: https://discord.gg/FNNNgqb
