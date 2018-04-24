@@ -1,45 +1,64 @@
-from bs4 import BeautifulSoup as soup
+from bs4 import BeautifulSoup
 from selenium import webdriver
+import manage_data as db
+import time
 
 
 def search(*query):
+    # Prepare variables
     driver = webdriver.Firefox()
     result = []
     root_url = "https://www.youtube.com/results?search_query="
 
-    # Read site
+    # Read Site
     driver.get(root_url + "+".join(query))
     html = driver.page_source
-
-    # Parse Site
-    page_soup = soup(html, "lxml")
+    page_soup = BeautifulSoup(html, "lxml")
+    driver.close()
 
     # Filter query
     # Get result count of videos
-    array = page_soup.findAll("yt-formatted-string", id="result-count")
+    result.append(getResultCount(page_soup))
 
-    results = "None"
-    titles = []
+    # Get videos
+    videos = getVideos(page_soup)
+    for item in videos:
+        result.append(item)
 
-    if array:
-        for item in array:
-            if item:
-                results = item.string
+    # For debugging purposes, print result array
+    """
+    for item in result:
+        print(str(item))
+    """
 
-        array = page_soup.findAll(lambda tag:
-                                  tag.name == "a" and tag.findParent("div", {"id": "dismissable"}), attrs={"id": "video-title"}, limit=5)
+    return result
 
-        if array:
-            for item in array:
-                if item:
-                    titles.append(item.string)
 
-    result.append("Query: " + root_url + "+".join(query))
-    result.append(results)
+def getResultCount(html):
+    result = "None"
+    count_array = html.findAll("yt-formatted-string", id="result-count")
 
-    index = 0
+    if count_array[1]:
+        result = count_array[1].string
+
+    return result
+
+
+def getVideos(html):
+    result = []
+    search_data = []
+
+    titles = html.findAll(lambda tag: tag.name == "a" and tag.findParent(
+        "div", {"id": "dismissable"}), attrs={"id": "video-title"}, limit=12)
+
+    counter = 0
     for item in titles:
-        index += 1
-        result.append("Result #" + str(index) + ": " + item)
+        if counter > 1:
+            result.append(str(counter - 2) + ": " + item.string)
+            search_data.append([(counter - 2), item.string, item['href']])
+
+        counter += 1
+
+    db.saveSearchData("youtube", search_data)
 
     return result

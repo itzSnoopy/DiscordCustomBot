@@ -1,4 +1,5 @@
 import youtube_engine as yt
+import google_engine as gg
 
 
 def select(index):
@@ -17,6 +18,8 @@ def search(engine, *query):
 
     if engine == 'youtube':
         return yt.search(*query)
+    elif engine == 'google':
+        return gg.search(*query)
     elif engine == 'duckduckgo':
         return hardcoded
     else:
