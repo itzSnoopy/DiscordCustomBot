@@ -228,6 +228,6 @@ if __name__ == "__main__":
     main()
 
     # Bot token
-    client.run('NDI3OTUwODQzODAzNzI5OTIw.DbV8kg.LWJIydWXdu8z-5nCeoLlVyHY3Yc')
+    client.run('')
     print("program ended")
     input("Enter to exit")
