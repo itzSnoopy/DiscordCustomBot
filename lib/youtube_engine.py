@@ -14,7 +14,6 @@ def search(*query):
     driver.get(root_url + "+".join(query))
     html = driver.page_source
     page_soup = BeautifulSoup(html, "lxml")
-    driver.close()
 
     # Filter query
     # Get result count of videos
@@ -30,6 +29,8 @@ def search(*query):
     for item in result:
         print(str(item))
     """
+    # Close driver
+    driver.close()
 
     return result
 
@@ -44,6 +45,8 @@ def getResultCount(html):
     return result
 
 
+"""
+{
 def getVideos(html):
     result = []
     search_data = []
@@ -56,6 +59,32 @@ def getVideos(html):
         if counter > 1:
             result.append(str(counter - 2) + ": " + item.string)
             search_data.append([(counter - 2), item.string, item['href']])
+
+        counter += 1
+
+    db.saveSearchData("youtube", search_data)
+
+    return result
+}
+"""
+
+# Get video info from query page
+# and save data in cache
+
+
+def getVideos(html):
+    result = []
+    search_data = []
+
+    titles = html.findAll(lambda tag: tag.name == "a" and tag.findParent(
+        "div", {"id": "dismissable"}), attrs={"id": "video-title"}, limit=12)
+
+    counter = 0
+    for item in titles:
+        # Data in index 0 and 1 is not desired
+        if counter > 1:
+            result.append(str(counter - 2) + ": " + item.string)
+            search_data.append([item.string, item["href"]])
 
         counter += 1
 
