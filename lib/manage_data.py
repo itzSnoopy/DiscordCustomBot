@@ -12,6 +12,7 @@ def saveSearchData(engine, args):
         print("no engine provided")
 
 
+"""
 def manageYoutubeCache(args):
     cache = open("search_cache.txt", "w")
     cache.write("Last search on " + ENGINE_YOUTUBE + ";\n")
@@ -28,5 +29,16 @@ def manageYoutubeCache(args):
         cache.write("Path:  " + "https://youtube.com" +
                     str(args[i][2]) + ";\n")
         cache.write("----------------------" + "\n")
+
+    cache.close()
+"""
+
+
+def manageYoutubeCache(args):
+    cache = open("youtube_cache.txt", "w")
+
+    for array in args:
+        cache.write(str(array[0]))
+        cache.write("https://youtube.com" + str(array[1]))
 
     cache.close()
